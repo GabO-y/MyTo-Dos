@@ -69,12 +69,10 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
 
     const handleAddTask = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Validação: nome obrigatório
         if (!newTaskName.trim()) {
             alert("O nome da task é obrigatório.");
             return;
         }
-        // Validação: expectedEnd (se fornecido) deve ser no futuro
         if (expectedEnd) {
             const now = new Date();
             const endDate = new Date(expectedEnd);
@@ -114,9 +112,7 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
         }
     };
 
-    // Estado para controlar qual task está com descrição aberta
     const [openTaskId, setOpenTaskId] = useState<number | null>(null);
-    // Estado para edição de task
     const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
     const [editTaskName, setEditTaskName] = useState("");
     const [editTaskDesc, setEditTaskDesc] = useState("");
@@ -228,7 +224,6 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
                                 border: '1px solid #ccc',
                                 resize: 'vertical'
                             }}
-                            style={{ resize: 'vertical', fontSize: 14 }}
                         />
                         <div style={{ display: 'flex', gap: 8, marginTop: 4 }}>
                             <button type="submit">Salvar</button>
