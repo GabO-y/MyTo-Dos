@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Card from '../components/card';
 import axios from 'axios';
 
+//O modelo do Card conforme a API
 type CardType = {
     id: number;
     name: string;
@@ -10,7 +11,13 @@ type CardType = {
     tasks?: any[];
 };
 
+/*
+Página do Board onde ficam os cards, um quadro que 
+vai conter os cards criados pelo usuário.
+*/
 export function Board() {
+    // Estados para armazenar os cards, o nome e descrição do novo card,
+    //  e se está no modo de adicionar
     const [cards, setCards] = useState<CardType[]>([]);
     const [newCardName, setNewCardName] = useState("");
     const [newCardDesc, setNewCardDesc] = useState("");
@@ -18,6 +25,7 @@ export function Board() {
     const API_URL = import.meta.env.VITE_API_URL;
     const navigate = useNavigate();
 
+    // Efeito para buscar os cards ao carregar o componente
     useEffect(() => {
         const fetchCards = async () => {
             const token = localStorage.getItem('token');
@@ -41,6 +49,7 @@ export function Board() {
         fetchCards();
     }, [API_URL]);
 
+    // Função para adicionar um novo card
     const handleAddCard = async (e: React.FormEvent) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
@@ -65,6 +74,7 @@ export function Board() {
         }
     };
 
+    // Função para remover um card
     const handleDeleteCard = async (cardId: number) => {
         const token = localStorage.getItem('token');
         if (!token) return;
@@ -79,6 +89,7 @@ export function Board() {
         }
     };
 
+    // Renderização do componente
     return (
         <div style={{ padding: 24, position: 'relative', minHeight: '100vh' }}>
             <button

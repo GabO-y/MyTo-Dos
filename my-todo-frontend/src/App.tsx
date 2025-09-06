@@ -5,6 +5,7 @@ import Register from './pages/register';
 import { Board } from './pages/board';
 import type {JSX} from "react";
 
+// Componente para proteger rotas que precisam de autenticação
 function ProtectedRoute({ children }: { children: JSX.Element }) {
     const token = localStorage.getItem("token");
 
@@ -15,6 +16,8 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
     return children;
 }
 
+
+// Componente principal da aplicação
 function App() {
   return (
     <Routes>

@@ -3,6 +3,7 @@ import api from "../api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
+// Função para fazer login, retorna o token e armazena no localStorage
 export async function login(username: string, password: string) {
   const response = await api.post("/auth/authenticate", { username, password });
   const token = response.data.token;
@@ -12,11 +13,14 @@ export async function login(username: string, password: string) {
   return token;
 }
 
+// Componente de Login
 export default function Login({ onToggle }: { onToggle?: () => void }) {
+  // Estados para armazenar o username e password
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  // Função para lidar com o submit do formulário de login
   async function handleSubmit(event: FormEvent<HTMLFormElement>): Promise<void> {
     event.preventDefault();
     if (!username.trim() || !password.trim()) {
@@ -36,6 +40,7 @@ export default function Login({ onToggle }: { onToggle?: () => void }) {
     }
   }
 
+  // Renderização do componente
   return (
     <div>
       <h1>Login</h1>

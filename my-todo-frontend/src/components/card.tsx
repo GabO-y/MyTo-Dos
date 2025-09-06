@@ -1,3 +1,4 @@
+// Tipo de Task conforme a API
 export type Task = {
     id: number;
     name: string;
@@ -5,20 +6,24 @@ export type Task = {
     status?: 'DOING' | 'COMPLETED' | 'LATE';
 };
 
+//Propriedades do Card de acordo com a API
 export type CardProps = {
     name: string;
     description: string;
     tasks?: Task[];
 };
 
+// Componente de Card que exibe nome, descrição e lista de tasks
 import React, { useState } from 'react';
 import axios from 'axios';
 import IconButton from './IconButton';
 
+// Props extras para o Card, id e função de deletar
 type CardExtraProps = { id?: number; onDelete?: () => void };
 const Card: React.FC<CardProps & CardExtraProps> = (props) => {
-    const { name, description, tasks, id, onDelete } = props;
 
+    // Desestruturação das props
+    const { name, description, tasks, id, onDelete } = props;
     const [showDescription, setShowDescription] = useState(false);
     const [editingCard, setEditingCard] = useState(false);
     const [editCardName, setEditCardName] = useState(name);
@@ -27,9 +32,12 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
     const [newTaskName, setNewTaskName] = useState("");
     const [newTaskDesc, setNewTaskDesc] = useState("");
     const [cardTasks, setCardTasks] = useState<Task[]>(tasks || []);
+    const [expectedEnd, setExpectedEnd] = useState<string>("");
+
+    // URL da API que fica no .env
     const API_URL = import.meta.env.VITE_API_URL;
 
-
+    // Função para deletar uma task
     const handleDeleteTask = async (taskId: number) => {
         const token = localStorage.getItem("token");
         if (!token) return;
@@ -44,6 +52,7 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
         }
     };
 
+    // Função para marcar uma task como completa  
     const handleCompleteTask = async (task: Task) => {
         const token = localStorage.getItem("token");
         if (!token) return;
@@ -65,8 +74,9 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
             console.error(err);
         }
     };
-    const [expectedEnd, setExpectedEnd] = useState<string>("");
 
+
+    // Validações básicas antes de enviar a requisição
     const handleAddTask = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newTaskName.trim()) {
@@ -112,17 +122,21 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
         }
     };
 
+    // Estados para controlar edição e visualização de tasks
     const [openTaskId, setOpenTaskId] = useState<number | null>(null);
     const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
     const [editTaskName, setEditTaskName] = useState("");
     const [editTaskDesc, setEditTaskDesc] = useState("");
 
+    // Funções para editar uma task
     const handleEditTask = (task: Task) => {
         setEditingTaskId(task.id);
         setEditTaskName(task.name);
         setEditTaskDesc(task.description || "");
     };
 
+
+    //para salvar a task editada
     const handleSaveEditTask = async (task: Task) => {
         const token = localStorage.getItem("token");
         if (!token) return;
@@ -146,9 +160,11 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
         }
     };
 
+    // Estados para controlar edição do card
     const [cardName, setCardName] = useState(name);
     const [cardDesc, setCardDesc] = useState(description);
 
+    // Função para salvar edição do card
     const handleSaveEditCard = async (e: React.FormEvent) => {
         e.preventDefault();
         const token = localStorage.getItem("token");
@@ -168,6 +184,7 @@ const Card: React.FC<CardProps & CardExtraProps> = (props) => {
         }
     };
 
+    // Renderização do componente
     return (
         <div
             style={{ border: '1px solid #ccc', borderRadius: 8, padding: 16, margin: 0, width: '100%', boxSizing: 'border-box', cursor: 'pointer' }}

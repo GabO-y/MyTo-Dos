@@ -1,5 +1,6 @@
 import React from "react";
 
+// Estilo base dos botoẽs
   const baseButtonStyle: React.CSSProperties = {
     border: '1px solid #fff',
     borderRadius: '50%',
@@ -14,11 +15,13 @@ import React from "react";
     fontSize: 14,
     };
 
+// Props customizadas para o IconButton
 type IconButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  color?: string;     // cor customizada (ex: vermelho)
+  color?: string;     // cor customizada 
   size?: number;      // tamanho customizado
 };
 
+// Componente de botão com ícone
 const IconButton: React.FC<IconButtonProps> = ({ 
   children, 
   color = "#fff", 

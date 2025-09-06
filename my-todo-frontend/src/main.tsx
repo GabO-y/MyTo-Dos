@@ -6,6 +6,7 @@ import App from './App';
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 
+// Renderização da aplicação dentro do BrowserRouter para habilitar roteamento
 root.render(
   <StrictMode>
     <BrowserRouter>
